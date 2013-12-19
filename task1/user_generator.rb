@@ -1,6 +1,5 @@
 require "./lib/Options"
 require "./lib/Generator"
-require 'set'
 
 options = Options.new(ARGV)
 
