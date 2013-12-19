@@ -19,13 +19,17 @@ module Damage
 
 
   def self.permutation_of_two_adjacent_digits record
-		array_record = record.split(//).to_a
-		index = 0
-  	(record.size - 2).times do
-  		break if array_record[index].match(/\d/) && array_record[index + 1].match(/\d/)
-  		index += 1
-  	end
-  	record[index + 1], record[index] = record[index], record[index + 1]
+    if record.size >= 2
+  		index = 0
+      array_record = record.split(//).to_a
+    	(record.size - 1).times do
+    		if array_record[index].match(/\d/) && array_record[index + 1].match(/\d/)
+          record[index + 1], record[index] = record[index], record[index + 1]
+          break
+        end
+    		index += 1
+    	end
+    end
   	record
   end
 
