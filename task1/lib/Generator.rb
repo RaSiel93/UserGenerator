@@ -1,13 +1,18 @@
-require "./lib/RU"
-require "./lib/EN"
+require "ryba"
+
+require 'optparse'
+
+require "./lib/Damage"
+require "./lib/UserGenerator"
+
+require "./lib/GeneratorRecord"
 
 module Generator
-	class Factory
-		def self.Factory(location)
-			case location
-			when "RU" then RU::Generator	
-			when "EN" then EN::Generator
-			end		
-		end
-	end
+  def self.generate options
+  	users = Set.new
+	  factory = GeneratorRecord::Factory.factory options.location
+	  users << factory.generate until users.size == options.count
+  	users.map{ |user| Damage::execute(user, options.probability) }
+  	users
+  end
 end

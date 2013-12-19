@@ -19,12 +19,13 @@ module Damage
 
 
   def self.permutation_of_two_adjacent_digits record
+    p record.frozen?
     if record.size >= 2
   		index = 0
       array_record = record.split(//).to_a
     	(record.size - 1).times do
     		if array_record[index].match(/\d/) && array_record[index + 1].match(/\d/)
-          record[index + 1], record[index] = record[index], record[index + 1]
+          #record[index + 1], record[index] = record[index], record[index + 1]
           break
         end
     		index += 1

@@ -12,26 +12,26 @@ module EN
 	end
 
 	class Name
-		def self.generate
-			"#{Random.firstname} #{Random.lastname}"# + " " + Random.lastname
+		def self.name
+			"#{Random.firstname} #{Random.lastname}"
 		end
 	end
 
 	class AddressAndPhone
-
 		def self.generate
 			fake  = fake_data.sample
 			
-			phone = [fake.phone_code, rand(10..99), rand.to_s[2..3], rand.to_s[2..6]].join("-")
-			address = [Random.address_line_1, fake.city, fake.state, "US", fake.zip_code].join(", ")
+			phone = [fake.phone_code, rand(10..99), rand(10..99), rand(10000..99999)].join("-")
+			address = [Random.address_line_1, fake.city, fake.state, fake.country, fake.zip_code].join(", ")
 			
-			 [addres, phone].join('; ')
+			[address, phone].join('; ')
 		end
 
 		def self.fake_data
 			@data ||= File.open( "./fixtures/US.txt" ).map {|r| FakeData.new(r)}
+			#RU - YAML
+			#BY - CSV
 		end
-		
 	end
 
 	class FakeData
@@ -44,6 +44,19 @@ module EN
 		end
 
 		def state
+			@line[3]
+		end
+
+		def country
+			"US"
+		end
+
+		def zip_code
+			@line[1]
+		end
+
+		def phone_code
+			@line[6]
 		end
 	end
 end
