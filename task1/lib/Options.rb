@@ -36,20 +36,15 @@ class Options
 	  		else
 	  			@errors << "Is not number. Aborted! #{c}" 
 	    	end
-	    	#binding.pry
 	  	end
 
 			#!!!!!!!
 	  	opts.on("-p", "--probability FLOAT_NUMBER", "Probability error in record") do |p|
-	  		if p.to_f.to_s != p
+	  		if !p.match("^[\d]+(\.[\d]+){0,1}$").nil?
 	    		@errors << "Is not number. Aborted! #{p}" 
-	    		break
+	    	else
+	    		@probability = p.to_f
 	    	end
-	    	if p.to_f < 0 || p.to_f > 1
-		    	@errors << "Beyond the allowed values (0..1). #{p}" 
-		    	break
-		    end
-	    	@probability = p.to_f
 	  	end
 		end.parse!
 	end
