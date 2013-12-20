@@ -1,5 +1,10 @@
 class Options
 	attr_reader :location, :count, :probability
+	
+	#!!!!!!!
+	RU = "RU"
+	BY = "BY"
+	US = "US"
 
 	def errors?
 		@errors.any?
@@ -17,19 +22,33 @@ class Options
 		OptionParser.new do |opts|
 	  	opts.banner = "Usage: user_generator.rb [options]"
 
-	 		opts.on("-l", "--location [:RU, :BY, :US]", "Location of generated users") do |loc|
-				@errors << "Wrong location of watermark. Aborted!" if loc.match("^BY$|^RU$|^EN$").nil?
-	    	@location = loc
+	 		opts.on("-l", "--location [:#{RU}, :#{BY}, :#{US}]", "Location of generated users") do |loc|
+				if !loc.match("^#{BY}$|^#{RU}$|^#{US}$").nil?
+		    	@location = loc
+				else
+					@errors << "Wrong location of watermark. Aborted!" 
+		    end
 	  	end 
 
 	  	opts.on("-c", "--count NUMBER", "Count of records") do |c|
-	  		@errors << "Is not number. Aborted! #{c}" if c.to_i.to_s != c
-	    	@count = c.to_i
+	  		if !c.match("^[0-9]+$").nil?
+	    		@count = c.to_i
+	  		else
+	  			@errors << "Is not number. Aborted! #{c}" 
+	    	end
+	    	#binding.pry
 	  	end
 
+			#!!!!!!!
 	  	opts.on("-p", "--probability FLOAT_NUMBER", "Probability error in record") do |p|
-	    	@errors << "Is not number. Aborted! #{p}" if p.to_f.to_s != p
-	    	@errors << "Beyond the allowed values (0..1). #{p}" if p.to_f < 0 || p.to_f > 1
+	  		if p.to_f.to_s != p
+	    		@errors << "Is not number. Aborted! #{p}" 
+	    		break
+	    	end
+	    	if p.to_f < 0 || p.to_f > 1
+		    	@errors << "Beyond the allowed values (0..1). #{p}" 
+		    	break
+		    end
 	    	@probability = p.to_f
 	  	end
 		end.parse!

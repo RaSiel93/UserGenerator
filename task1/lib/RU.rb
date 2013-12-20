@@ -26,13 +26,13 @@ module RU
 			fake  = OpenStruct.new(fake_data.sample)
 
 			phone = [fake.phone_code, rand(10..99), rand(10..99), rand(10000..99999)].join("-")
-			address = [Random.address_line_1, fake.city, fake.state, fake.country, fake.zip_code].join(", ")
+			address = [Ryba::Address.street, fake.city, fake.state, fake.zip_code, "Россия"].join(", ")
 			
 			[address, phone].join('; ')
 		end
 
 		def self.fake_data
-			@data ||= open('RU.cfg') { |f| YAML.load(f) }
+			@data ||= open('./fixtures/RU.cfg') { |f| YAML.load(f) }
 		end
 	end
 end

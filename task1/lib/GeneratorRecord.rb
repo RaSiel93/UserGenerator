@@ -1,4 +1,5 @@
 require "./lib/RU"
+require "./lib/BY"
 require "./lib/EN"
 
 module GeneratorRecord
@@ -6,7 +7,8 @@ module GeneratorRecord
 		def self.factory(location)
 			case location
 			when "RU" then RU::Generator	
-			when "EN" then EN::Generator
+			when "BY" then BY::Generator
+			when "US" then US::Generator
 			end		
 		end
 	end

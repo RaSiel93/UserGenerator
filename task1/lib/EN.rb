@@ -1,11 +1,11 @@
 require "./lib/Base"
 require "random_data"
 
-module EN
+module US
 	class Generator < Base::Generator
 		def self.generate
-			name = EN::Name.name
-			address = EN::AddressAndPhone.generate
+			name = US::Name.name
+			address = US::AddressAndPhone.generate
 			
 			[name, address].join("; ")
 		end
@@ -22,7 +22,7 @@ module EN
 			fake  = fake_data.sample
 			
 			phone = [fake.phone_code, rand(10..99), rand(10..99), rand(10000..99999)].join("-")
-			address = [Random.address_line_1, fake.city, fake.state, fake.country, fake.zip_code].join(", ")
+			address = [Random.address_line_1, fake.city, fake.state, fake.zip_code, fake.country].join(", ")
 			
 			[address, phone].join('; ')
 		end
@@ -48,7 +48,7 @@ module EN
 		end
 
 		def country
-			"US"
+			"USA"
 		end
 
 		def zip_code
